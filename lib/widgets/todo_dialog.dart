@@ -39,14 +39,13 @@ class _AddToDoDialogWidgetState extends State<AddToDoDialogWidget> {
   );
 
 void addTodo() {
-  final isValid =_formKey.currentState!.validate();
+  final isValid =_formKey.currentState.validate();
   if (!isValid) {
     return;
   } else {
     final todo = Todo(
       id: DateTime.now().toString(),
       title: title,
-      createdTime: DateTime.now(),
 
     );
     final provider = Provider.of<TodosProvider>(context, listen: false);

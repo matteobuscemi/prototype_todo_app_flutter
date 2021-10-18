@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:prototype_todo_app/api/firebase_api.dart';
 import 'package:prototype_todo_app/main.dart';
+import 'package:prototype_todo_app/model/todo.dart';
+import 'package:prototype_todo_app/provider/todos.dart';
 import 'package:prototype_todo_app/widgets/completed_list.dart';
 import 'package:prototype_todo_app/widgets/todo_dialog.dart';
 import 'package:prototype_todo_app/widgets/todo_list.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -43,7 +47,26 @@ class _HomeState extends State<Home>{
         ],
 
       ),
-      body: tabs[selectedIndex],
+      body: StreamBuilder<List<Todo>>(
+        stream: FirebaseApi.readTodos(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+            default:
+              if (snapshot.hasError) {
+                return Text('Something Went Wrong Try Later');
+              } else {
+                final todos = snapshot.data;
+
+                final provider = Provider.of<TodosProvider>(context);
+                provider.setTodos(todos);
+
+                return tabs[selectedIndex];
+              }
+          }
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

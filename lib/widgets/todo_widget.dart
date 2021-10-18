@@ -10,8 +10,8 @@ class TodoWidget extends StatelessWidget {
   final Todo todo;
 
   const TodoWidget({
-    required this.todo,
-    Key? key,
+     @required this.todo,
+    Key key,
 }) : super(key: key);
 
   @override

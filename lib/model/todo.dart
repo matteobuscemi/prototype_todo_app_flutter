@@ -1,22 +1,31 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:prototype_todo_app/utils.dart';
 
 class TodoField {
-  static const createdTime = 'createdTime';
 
 }
 
 class Todo {
-  DateTime createdTime;
   String title;
   String id;
   bool isDone;
 
   Todo({
-    required this.createdTime,
-    required this.title,
-    required this.id,
+    @required this.title,
+    @required this.id,
     this.isDone = false,
 });
 
+  static Todo fromJson(Map<String, dynamic> json) => Todo(
+    title: json['title'],
+    id: json['id'],
+    isDone: json['isDone'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'title': title,
+    'id': id,
+    'isDone': isDone,
+  };
 
 }

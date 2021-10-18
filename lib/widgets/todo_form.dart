@@ -6,10 +6,10 @@ class TodoFormWidget extends StatelessWidget {
   final VoidCallback onSavedTodo;
 
   const TodoFormWidget({
-    Key? key,
+    Key key,
     this.title = '',
-    required this.onChangedTitle,
-    required this.onSavedTodo,
+    @required this.onChangedTitle,
+    @required this.onSavedTodo,
   }) : super(key: key);
 
   @override
@@ -32,7 +32,7 @@ class TodoFormWidget extends StatelessWidget {
         initialValue: title,
         onChanged: onChangedTitle,
         validator: (title) {
-          if (title!.isEmpty) {
+          if (title.isEmpty) {
             return 'De titel kan niet leeg zijn';
           }
           return null;
